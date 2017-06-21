@@ -6,7 +6,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation for configuring the plugin
+ * Annotation for configuring the plugin.
+ *
+ * Only one annotation is allowed, more than once will throw an exception in the apt :)
+ *
  * Created by saguilera on 3/3/17.
  */
 @Target({ElementType.TYPE})
@@ -66,7 +69,7 @@ public @interface SecureConfigurations {
      * Then keys will only return if the APK was installed from the playstore. Else it will return
      * empty strings.
      *
-     * @return list of allowed places from where the APK should be installed
+     * @return list of allowed places from where the APK should be installed. If empty then it wont check and allows any place.
      */
     String[] allowedInstallers() default {};
 
