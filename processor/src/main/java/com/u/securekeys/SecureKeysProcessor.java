@@ -125,12 +125,19 @@ public class SecureKeysProcessor extends AbstractProcessor {
                 } else {
                     encoder = new Encoder(config.aesInitialVector(), config.aesKey());
 
-                    addToMap(builder,
-                        Encoder.hash(Protocol.AES_KEY),
-                        Encoder.base64(config.aesKey()));
-                    addToMap(builder,
-                        Encoder.hash(Protocol.AES_INITIAL_VECTOR),
-                        Encoder.base64(config.aesInitialVector()));
+                    if (SecureConfigurations.class.getDeclaredMethod("aesKey").getDefaultValue() !=
+                            config.aesKey()) {
+                        addToMap(builder,
+                            Encoder.hash(Protocol.AES_KEY),
+                            Encoder.base64(config.aesKey()));
+                    }
+
+                    if (SecureConfigurations.class.getDeclaredMethod("aesInitialVector").getDefaultValue() !=
+                            config.aesInitialVector()) {
+                        addToMap(builder,
+                            Encoder.hash(Protocol.AES_INITIAL_VECTOR),
+                            Encoder.base64(config.aesInitialVector()));
+                    }
                 }
 
             } else {
